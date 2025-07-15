@@ -1,47 +1,22 @@
-package com.zaram.zaramorcamentos
+package com.zaram.orcamentos
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.zaram.zaramorcamentos.ui.theme.ZaramOrcamentosTheme
+import androidx.compose.runtime.*
+import com.zaram.orcamentos.ui.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            ZaramOrcamentosTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            var screen by remember { mutableStateOf("welcome") }
+
+            when (screen) {
+                "welcome" -> WelcomeScreen(onNext = { screen = "form" })
+                "form" -> FormScreen(onSubmit = { screen = "success" })
+                "success" -> SuccessScreen()
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ZaramOrcamentosTheme {
-        Greeting("Android")
     }
 }
